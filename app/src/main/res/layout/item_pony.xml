@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="4dp">
+
+    <ImageView
+        android:id="@+id/ponyImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/pony_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+    img res https://www.pngwing.com/en/free-png-ngxiz
+    -->
+
+    <TextView
+        android:id="@+id/ponyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/ponySex"
+        app:layout_constraintStart_toEndOf="@id/ponyImage"
+        app:layout_constraintTop_toTopOf="@id/ponyImage"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Pinkie Pie" />
+
+    <TextView
+        android:id="@+id/ponyAlias"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/ponyName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ponyName"
+        tools:text="(Pinkie)" />
+
+    <TextView
+        android:id="@+id/ponySex"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@id/ponyOccupation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ponyName"
+        app:layout_constraintTop_toBottomOf="@id/ponyName"
+        tools:text="female" />
+
+    <TextView
+        android:id="@+id/ponyOccupation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintBottom_toBottomOf="@id/ponyImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ponyName"
+        app:layout_constraintTop_toBottomOf="@id/ponySex"
+        tools:text="Ruler of Equestria (S9E26)\nFounder/leader of the Council of Friendship (S9E26)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

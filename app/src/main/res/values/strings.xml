@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GDG Android Webinar 4</string>
+    <string name="search_for_pony_hint">Search for pony</string>
 </resources>
