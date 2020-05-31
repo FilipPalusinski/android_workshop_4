@@ -2,11 +2,12 @@ package com.example.gdgandroidwebinar4.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.gdgandroidwebinar4.data.PonyService
-import com.example.gdgandroidwebinar4.data.ResponseCallback
 import com.example.gdgandroidwebinar4.models.Pony
 import com.example.gdgandroidwebinar4.models.PonyResponse
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -54,24 +55,19 @@ class MainViewModel : ViewModel() {
     fun searchPony(name: String?) {
         searchInProgress.value = true
 
-        name.takeUnless {
-            it.isNullOrEmpty()
-        }?.let {
-            service.getPonyByName(it, ponyResponseCallback)
-        }
-            ?: run {
-                service.getAllPonies(ponyResponseCallback)
+        viewModelScope.launch {
+            try {
+                name.takeUnless {
+                    it.isNullOrEmpty()
+                }?.let {
+                    ponyList.value = service.getPonyByName(it)
+                } ?: run {
+                    ponyList.value = service.getAllPonies()
+                }
+            } catch (e: Exception) {
+            } finally {
+                searchInProgress.value = false
             }
-    }
-
-    private val ponyResponseCallback = object : ResponseCallback<List<Pony>> {
-        override fun onSuccess(result: List<Pony>) {
-            searchInProgress.value = false
-            ponyList.value = result
-        }
-
-        override fun onError() {
-            searchInProgress.value = false
         }
     }
 }
