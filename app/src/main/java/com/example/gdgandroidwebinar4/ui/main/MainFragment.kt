@@ -35,6 +35,9 @@ class MainFragment : Fragment() {
         viewModel.ponyList.observe(viewLifecycleOwner, Observer { ponyList ->
             ponyAdapter.submitList(ponyList)
         })
+
+        viewModel.getPonyByUrl()
+
     }
 
     companion object {
