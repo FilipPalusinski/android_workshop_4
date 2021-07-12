@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.gdgandroidwebinar4.R
 import com.example.gdgandroidwebinar4.models.Pony
 import kotlinx.android.synthetic.main.item_pony.view.*
@@ -39,6 +40,14 @@ class PonyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             ponyAlias.text = if (pony.alias.isNullOrEmpty()) "" else "(${pony.alias})"
             ponySex.text = pony.sex.orEmpty()
             ponyOccupation.text = pony.occupation.orEmpty()
+
+            pony.image?.firstOrNull()?.let { imageUrl ->
+                Glide
+                    .with(this)
+                    .load(imageUrl)
+                    .into(ponyImage)
+            }
+
         }
     }
 }
