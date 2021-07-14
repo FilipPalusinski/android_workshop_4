@@ -2,15 +2,18 @@ package com.example.gdgandroidwebinar4.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.gdgandroidwebinar4.data.PonyResponseCallback
 import com.example.gdgandroidwebinar4.data.PonyService
 import com.example.gdgandroidwebinar4.models.Pony
 import com.example.gdgandroidwebinar4.models.PonyResponse
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.lang.StringBuilder
 import java.net.HttpCookie
 import java.net.HttpURLConnection
@@ -55,15 +58,21 @@ class MainViewModel : ViewModel() {
     }
 
     fun getPonyWithRetrofit(){
-        ponyService.getPonyList(object: PonyResponseCallback{
-            override fun onSuccess(list: List<Pony>) {
-                ponyList.value = list
-            }
-
-            override fun onError() {
+        viewModelScope.launch {
+            try{
+               ponyList.value = ponyService.getPonyList()
+            }catch(e: Exception){
 
             }
+        }
+    }
+    fun getPonyWithRetrofit(name: String){
+        viewModelScope.launch {
+            try{
+                ponyList.value = ponyService.getPonyListByName(name)
+            }catch(e: Exception){
 
-        })
+            }
+        }
     }
 }

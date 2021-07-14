@@ -1,10 +1,14 @@
 package com.example.gdgandroidwebinar4.ui.main
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -39,6 +43,24 @@ class MainFragment : Fragment() {
        // viewModel.getPonyByUrl()
 
         viewModel.getPonyWithRetrofit()
+
+        searchEditText.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let{ text ->
+                    if(text.isEmpty()){
+                        viewModel.getPonyWithRetrofit()
+                    }else{
+                        viewModel.getPonyWithRetrofit(text.toString())
+                    }
+
+                }
+            }
+
+        })
 
     }
 

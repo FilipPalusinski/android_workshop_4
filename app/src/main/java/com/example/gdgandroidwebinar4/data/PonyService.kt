@@ -10,6 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.IllegalStateException
 
 class PonyService {
     private val endpoints: PonyEndpoints
@@ -35,22 +36,26 @@ class PonyService {
     }
 
 
-    fun getPonyList(callback: PonyResponseCallback){
-        endpoints.getPonyList().enqueue(object : Callback<PonyResponse> {
-            override fun onResponse(call: Call<PonyResponse>, response: Response<PonyResponse>) {
-                val body = response.body()
-                if(body?.data != null){
-                    callback.onSuccess(body.data)
-                }else{
-                    callback.onError()
-                }
-            }
+   suspend fun getPonyList(): List<Pony>{
+        val result = endpoints.getPonyList()
 
-            override fun onFailure(call: Call<PonyResponse>, t: Throwable) {
-                callback.onError()
-            }
-
-
-        })
+       if(result.status == 200){
+           return result.data ?: listOf()
+       }else{
+           throw IllegalStateException()
+       }
     }
+
+    suspend fun getPonyListByName(name: String): List<Pony>{
+        val result = endpoints.getPonyListByName(name)
+
+        if(result.status == 200){
+            return result.data ?: listOf()
+        }else{
+            throw IllegalStateException()
+        }
+    }
+
+
+
 }
