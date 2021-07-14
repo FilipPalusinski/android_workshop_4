@@ -2,6 +2,8 @@ package com.example.gdgandroidwebinar4.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.gdgandroidwebinar4.data.PonyResponseCallback
+import com.example.gdgandroidwebinar4.data.PonyService
 import com.example.gdgandroidwebinar4.models.Pony
 import com.example.gdgandroidwebinar4.models.PonyResponse
 import com.google.gson.Gson
@@ -16,6 +18,8 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 class MainViewModel : ViewModel() {
+
+    val ponyService = PonyService()
 
     val ponyList = MutableLiveData<List<Pony>>().apply {
         value = emptyList()
@@ -50,5 +54,16 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun getPonyWithRetrofit(){
+        ponyService.getPonyList(object: PonyResponseCallback{
+            override fun onSuccess(list: List<Pony>) {
+                ponyList.value = list
+            }
 
+            override fun onError() {
+
+            }
+
+        })
+    }
 }

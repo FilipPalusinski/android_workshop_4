@@ -36,7 +36,9 @@ class MainFragment : Fragment() {
             ponyAdapter.submitList(ponyList)
         })
 
-        viewModel.getPonyByUrl()
+       // viewModel.getPonyByUrl()
+
+        viewModel.getPonyWithRetrofit()
 
     }
 
